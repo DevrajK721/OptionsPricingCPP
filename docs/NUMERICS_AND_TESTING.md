@@ -8,9 +8,9 @@ This repo leans heavily on unit tests that encode financial identities and numer
 
 ## 1) Tree error does not decrease monotonically
 
-CRR tree prices converge to Black–Scholes for European options as \(N\to\infty\), but the **absolute error** can “wiggle” as \(N\) increases.
+CRR tree prices converge to Black–Scholes for European options as $N\to\infty$, but the **absolute error** can “wiggle” as $N$ increases.
 
-Reason: the lattice is a discrete approximation; depending on \(N\), the grid aligns differently with strike/moneyness, which can create oscillatory convergence.
+Reason: the lattice is a discrete approximation; depending on $N$, the grid aligns differently with strike/moneyness, which can create oscillatory convergence.
 
 ### Testing implication
 Instead of enforcing “error must drop every time N increases”, the convergence tests check:
@@ -23,16 +23,16 @@ Instead of enforcing “error must drop every time N increases”, the convergen
 
 ### A) Black–Scholes identities
 - Put–call parity:
-  \[
+  $$
   C - P = S_0 e^{-qT} - K e^{-rT}
-  \]
+  $$
 - Bounds checks (call/put lower & upper bounds)
 - Monotonicity (e.g., call increases with S0; put increases with K)
 
 These catch missing discount factors, wrong sign conventions, or incorrect CDF usage.
 
 ### B) Tree convergence (European)
-Tree prices should converge toward BS analytic values as \(N\) increases. Tests:
+Tree prices should converge toward BS analytic values as $N$ increases. Tests:
 - evaluate a sequence of increasing N
 - require “overall improvement”
 - require a final N meets tolerance (e.g. a few bps)
@@ -41,8 +41,8 @@ Tree prices should converge toward BS analytic values as \(N\) increases. Tests:
 - American put price ≥ European put price
 - American call with q=0 is (approximately) the same as European call (no early exercise incentive)
 - No-arbitrage bounds for American options:
-  - \(0 \le C_A \le S_0\), \(C_A \ge \max(0,S_0-K)\)
-  - \(0 \le P_A \le K\), \(P_A \ge \max(0,K-S_0)\)
+  - $0 \le C_A \le S_0$, $C_A \ge \max(0,S_0-K)$
+  - $0 \le P_A \le K$, $P_A \ge \max(0,K-S_0)$
 
 
 ### D) Implied volatility
@@ -58,21 +58,21 @@ BS Greeks are tested against **finite differences of the BS price**.
 
 For example (central differences):
 - Delta:
-  \[
+  $$
   \Delta \approx \frac{V(S+h)-V(S-h)}{2h}
-  \]
+  $$
 - Gamma:
-  \[
+  $$
   \Gamma \approx \frac{V(S+h)-2V(S)+V(S-h)}{h^2}
-  \]
+  $$
 - Vega, Rho similarly via bumps
 
 Theta note:
-- This project uses **calendar theta** \(\Theta=\partial V/\partial t\)
-- Since \(T\) is time-to-maturity:
-  \[
+- This project uses **calendar theta** $\Theta=\partial V/\partial t$
+- Since $T$ is time-to-maturity:
+  $$
   \frac{\partial V}{\partial t} = -\frac{\partial V}{\partial T}
-  \]
-So FD theta uses a sign flip when approximating via perturbations in \(T\).
+  $$
+So FD theta uses a sign flip when approximating via perturbations in $T$.
 
 ---
