@@ -1,5 +1,5 @@
 # OptionsPricingCPP
-Options Pricing Library for European and American Options using Binomial Trees &amp; Monte Carlo Simulations with Greeks.
+Options Pricing Library for European and American Options using CRR Binomial Trees &amp; Black-Scholes with Greeks Computation.
 
 ## Unit Tests
 Build and run unit tests with 
